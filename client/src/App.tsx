@@ -29,8 +29,6 @@ export function App() {
     }),
   );
 
-  // const { data: campuses, isError } = trpc.getCampuses.useQuery();
-  // console.log('campuses', campuses)
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>

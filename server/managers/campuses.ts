@@ -13,11 +13,11 @@ export const getAllCampuses = () =>
         }
     });
 
-export const getSingleCampus = () => procBuilder.input(z.object({ id: z.string().min(1) })).query(async (req) => {
+export const getSingleCampus = () => procBuilder.input(z.object({ id: z.number().min(1) })).query(async (req) => {
     try {
         const campus = await prisma.campus.findUnique({
             where: {
-                id: +req.input.id
+                id: req.input.id
             }
         })
         return {
@@ -26,4 +26,9 @@ export const getSingleCampus = () => procBuilder.input(z.object({ id: z.string()
     } catch (error) {
         throw new TRPCError({ code: "BAD_REQUEST", message: "Invalid ID" });
     }
+})
+
+export const deleteSingleCampus = () => procBuilder.input(z.object({ id: z.number() })).mutation(async ({ input }) => {
+    await prisma.campus.delete({ where: { id: input.id } });
+    return { deleted: true }
 })

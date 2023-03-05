@@ -5,31 +5,34 @@ import NewCampus from './NewCampus';
 import '../../App.css';
 import UpdateCampus from './UpdateCampus';
 import { trpc } from '../../utils/trpc';
+import { useMutation, UseMutationResult } from '@tanstack/react-query';
+
+type CampusFromDB = {
+  id: number;
+  createdAt?: string;
+  updatedAt?: string;
+  name: string;
+  imageUrl: string;
+  address: string;
+  description: string;
+}
 
 function AllCampuses() {
   const { data, isError } = trpc.getCampuses.useQuery();
+  const mutation = trpc.deleteCampus.useMutation();
 
-  // function deleteCampus(campus: Campus) {
-  //   const deleteCampus = `/api/campuses/${campus.id}`;
-  //   import('axios')
-  //     .then((axios) => axios.default.delete(deleteCampus))
-  //     .then((response) =>
-  //       setContext({
-  //         ...context,
-  //         campuses: campuses.filter(
-  //           (currentCampus) => currentCampus.id !== campus.id
-  //         ),
-  //       })
-  //     );
-  // }
+  function deleteCampus(campus: CampusFromDB) {
+    mutation.mutate({ id: campus.id })
+  }
+
 
   return (
     <div id="campuses">
       <div>
-        <NewCampus />
-        <UpdateCampus />
+        {/* <NewCampus />
+        <UpdateCampus /> */}
       </div>
-      {data?.campuses?.map((campus: Campus) => {
+      {data?.campuses?.map((campus: CampusFromDB) => {
         return (
           <div key={campus.id}>
             <img
@@ -40,7 +43,7 @@ function AllCampuses() {
             <div>{campus.name}</div>
             <div>{campus.address}</div>
             <div>{campus.description}</div>
-            <button /*onClick={() => deleteCampus(campus)}*/>Delete</button>
+            <button onClick={() => deleteCampus(campus)}>Delete</button>
           </div>
         );
       })}
