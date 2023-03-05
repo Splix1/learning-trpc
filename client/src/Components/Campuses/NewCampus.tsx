@@ -1,26 +1,26 @@
 import React, { useContext, useState } from 'react';
 import { Campus, initialCampusState } from '../../Context/@types.campuses';
 import { Context } from '../../Context/ContextProvider';
+import { useMutation } from '@tanstack/react-query';
+import { trpc } from '../../utils/trpc';
 
 function NewCampus() {
   const [newCampus, setNewCampus] = useState<Campus>(initialCampusState);
   const { context, setContext, campuses } = useContext(Context);
+  const mutation = trpc.addCampus.useMutation();
 
-  function createCampus(evt: any) {
+
+  function createCampus(evt: React.FormEvent) {
     evt.preventDefault();
-    const postCampusRoute = '/api/campuses';
-    import('axios').then((axios) =>
-      axios.default
-        .post(postCampusRoute, newCampus)
-        .then((response) =>
-          setContext({ ...context, campuses: [...campuses, response?.data] })
-        )
-        .catch((err) => {
-          alert('Creation failed');
-          return;
-        })
-    );
-    setNewCampus(initialCampusState);
+    mutation.mutate(newCampus, {
+      onSuccess: (data) => {
+        setContext({ ...context, campuses: [...campuses, data.newCampus] })
+      },
+      onError: () => {
+        alert("Failed to create campus. Please fill out all fields correctly.")
+      }
+    })
+
   }
 
   return (
