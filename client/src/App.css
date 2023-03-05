@@ -1,4 +1,4 @@
-#root {
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -39,4 +39,63 @@
 
 .read-the-docs {
   color: #888;
+} */
+
+body {
+  background-color: #323232;
+}
+
+.campus {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 5px;
+}
+
+#add-campus-form {
+  margin-right: 2rem;
+}
+
+#campuses {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 2rem;
+}
+
+#campuses > div {
+  flex: 50;
+}
+
+.student {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 5px;
+  width: 100%;
+}
+
+#add-student-form {
+  margin-left: 25px;
+  width: 100%;
+}
+
+#students {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#students > div {
+  flex: 50;
+}
+
+.campus-img {
+  width: 30rem;
+  max-width: 50%;
+  margin-bottom: 2rem;
+}
+
+#update-campus {
+  margin-top: 2rem;
 }

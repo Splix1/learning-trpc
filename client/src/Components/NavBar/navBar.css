@@ -1,0 +1,7 @@
+#navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  background-color: gray;
+  height: 50px;
+}
