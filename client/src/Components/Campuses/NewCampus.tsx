@@ -1,20 +1,19 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Campus, initialCampusState } from '../../Context/@types.campuses';
-import { Context } from '../../Context/ContextProvider';
-import { useMutation } from '@tanstack/react-query';
 import { trpc } from '../../utils/trpc';
 
-function NewCampus() {
+
+function NewCampus({ refetch }: any) {
   const [newCampus, setNewCampus] = useState<Campus>(initialCampusState);
-  const { context, setContext, campuses } = useContext(Context);
+
   const mutation = trpc.addCampus.useMutation();
 
 
   function createCampus(evt: React.FormEvent) {
     evt.preventDefault();
     mutation.mutate(newCampus, {
-      onSuccess: (data) => {
-        setContext({ ...context, campuses: [...campuses, data.newCampus] })
+      onSuccess: () => {
+        refetch();
       },
       onError: () => {
         alert("Failed to create campus. Please fill out all fields correctly.")

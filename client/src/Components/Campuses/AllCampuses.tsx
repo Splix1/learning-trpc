@@ -1,30 +1,24 @@
-import React, { useContext, useEffect } from 'react';
-import { Context } from '../../Context/ContextProvider';
-import { Campus, deletedCampus, CampusFromDB } from '../../Context/@types.campuses';
+import React, { useEffect, useMemo } from 'react';
 import NewCampus from './NewCampus';
 import '../../App.css';
 import UpdateCampus from './UpdateCampus';
 import { trpc } from '../../utils/trpc';
-import { useMutation } from '@tanstack/react-query';
 
 
 function AllCampuses() {
-  const { data, isError, isLoading } = trpc.getCampuses.useQuery();
+  const { data, isError, isLoading, refetch } = trpc.getCampuses.useQuery();
   const mutation = trpc.deleteCampus.useMutation();
 
 
   function deleteCampus(id: number | undefined) {
     if (id) {
       mutation.mutate({ id: id }, {
-        onSuccess: () => {
-          if (data?.campuses) {
-            data.campuses = data.campuses.filter((current) => current.id !== id)
-          }
-        },
+        onSuccess: () => refetch(),
         onError: () => alert("There was a problem deleting this campus.")
       })
     }
   }
+
 
 
 
@@ -33,7 +27,7 @@ function AllCampuses() {
   return (
     <div id="campuses">
       <div>
-        <NewCampus />
+        <NewCampus refetch={refetch} />
         <UpdateCampus />
       </div>
       {data?.campuses?.map((campus) => {
