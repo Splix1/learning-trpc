@@ -4,23 +4,24 @@ import { Campus } from '../../Context/@types.campuses';
 import NewCampus from './NewCampus';
 import '../../App.css';
 import UpdateCampus from './UpdateCampus';
+import { trpc } from '../../utils/trpc';
 
 function AllCampuses() {
-  const { campuses, context, setContext } = useContext(Context);
+  const { data, isError } = trpc.getCampuses.useQuery();
 
-  function deleteCampus(campus: Campus) {
-    const deleteCampus = `/api/campuses/${campus.id}`;
-    import('axios')
-      .then((axios) => axios.default.delete(deleteCampus))
-      .then((response) =>
-        setContext({
-          ...context,
-          campuses: campuses.filter(
-            (currentCampus) => currentCampus.id !== campus.id
-          ),
-        })
-      );
-  }
+  // function deleteCampus(campus: Campus) {
+  //   const deleteCampus = `/api/campuses/${campus.id}`;
+  //   import('axios')
+  //     .then((axios) => axios.default.delete(deleteCampus))
+  //     .then((response) =>
+  //       setContext({
+  //         ...context,
+  //         campuses: campuses.filter(
+  //           (currentCampus) => currentCampus.id !== campus.id
+  //         ),
+  //       })
+  //     );
+  // }
 
   return (
     <div id="campuses">
@@ -28,7 +29,7 @@ function AllCampuses() {
         <NewCampus />
         <UpdateCampus />
       </div>
-      {campuses?.map((campus: Campus) => {
+      {data?.campuses?.map((campus: Campus) => {
         return (
           <div key={campus.id}>
             <img
@@ -39,7 +40,7 @@ function AllCampuses() {
             <div>{campus.name}</div>
             <div>{campus.address}</div>
             <div>{campus.description}</div>
-            <button onClick={() => deleteCampus(campus)}>Delete</button>
+            <button /*onClick={() => deleteCampus(campus)}*/>Delete</button>
           </div>
         );
       })}

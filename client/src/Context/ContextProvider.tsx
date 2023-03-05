@@ -1,6 +1,7 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { Student } from './@types.students';
 import { Campus } from './@types.campuses';
+import type { PropsWithChildren } from 'react';
 
 
 type combinedContext = {
@@ -12,7 +13,7 @@ type combinedContext = {
 
 export const Context = createContext<combinedContext>({} as combinedContext);
 
-const ContextProvider = ({ children }) => {
+const ContextProvider = ({ children }: PropsWithChildren) => {
   const [context, setContext] = useState<combinedContext>({
     students: [],
     campuses: [],

@@ -1,10 +1,17 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { httpBatchLink } from '@trpc/client';
-import React, { useState } from 'react';
-import IndexPage from './Components/IndexPage';
+import React, { useState, useEffect } from 'react';
 import { trpc } from './utils/trpc';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import AllCampuses from './Components/Campuses/AllCampuses';
+
+const routes = [
+  <Route key="/" path="/" element={<AllCampuses />} />
+]
 
 export function App() {
+
+
   const [queryClient] = useState(() => new QueryClient());
   const [trpcClient] = useState(() =>
     trpc.createClient({
@@ -21,10 +28,15 @@ export function App() {
       ],
     }),
   );
+
+  // const { data: campuses, isError } = trpc.getCampuses.useQuery();
+  // console.log('campuses', campuses)
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
-        <IndexPage />
+        <BrowserRouter>
+          <Routes>{routes}</Routes>
+        </BrowserRouter>
       </QueryClientProvider>
     </trpc.Provider>
   );
