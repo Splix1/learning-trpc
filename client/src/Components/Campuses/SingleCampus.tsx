@@ -1,30 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import { trpc } from '../../utils/trpc';
 
 const SingleCampus = () => {
-  const { id } = useParams();
-  const [campus, setCampus] = useState({
-    name: '',
-    imageUrl: '',
-    address: '',
-    description: '',
-  });
+  const id = useParams<{ id: string }>().id!;
+  const { data, isError } = trpc.getCampus.useQuery({ id })
 
-  useEffect(() => {
-    const fetchCampus = async () => {
-      const { data } = await axios.get(`/api/campuses/${id}`);
-      setCampus(data);
-    };
-    fetchCampus();
-  }, [id]);
 
+  if (isError) return <div>An error occured retrieving this campus</div>
+  if (!data) return <div>Loading...</div>
   return (
     <div id="singleCampus">
-      <div>{campus.name}</div>
-      <img src={campus.imageUrl} />
-      <div>{campus.address}</div>
-      <div>{campus.description}</div>
+      <div>{data?.campus?.name}</div>
+      <img src={data?.campus?.imageUrl} />
+      <div>{data?.campus?.address}</div>
+      <div>{data?.campus?.description}</div>
     </div>
   );
 };

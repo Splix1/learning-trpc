@@ -13,11 +13,11 @@ export const getAllCampuses = () =>
         }
     });
 
-export const getSingleCampus = () => procBuilder.input(z.object({ id: z.number().min(1) })).query(async (req) => {
+export const getSingleCampus = () => procBuilder.input(z.object({ id: z.string().min(1) })).query(async (req) => {
     try {
         const campus = await prisma.campus.findUnique({
             where: {
-                id: req.input.id
+                id: +req.input.id
             }
         })
         return {

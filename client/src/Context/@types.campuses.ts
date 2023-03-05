@@ -17,8 +17,8 @@ export const initialCampusState: Campus = {
 
 export type CampusFromDB = {
   id: number;
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt: string;
+  updatedAt: string;
   name: string;
   imageUrl: string;
   address: string;
