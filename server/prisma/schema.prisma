@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model Student {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  firstName String @db.VarChar(255)
+  lastName String @db.VarChar(255)
+  email String @unique @db.VarChar(255)
+  imageUrl String @default("https://cdn.discordapp.com/attachments/954370493501276170/1074898802655363092/585580325405458434.png")
+  gpa Decimal @default(0.0)
+  campus Campus? @relation(fields: [campusId], references: [id])
+  campusId Int?
+}
+
+model Campus {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name String @db.VarChar(255)
+  imageUrl String @default("https://cdn.discordapp.com/attachments/954370493501276170/1074898802655363092/585580325405458434.png")
+  address String @db.VarChar(255)
+  description String @db.VarChar(255)
+  students Student[]
+}
+
+
+
