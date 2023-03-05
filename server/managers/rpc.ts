@@ -1,7 +1,7 @@
 import { inferAsyncReturnType, initTRPC } from "@trpc/server";
 import * as trpcExpress from "@trpc/server/adapters/express";
 
-import { getAllCampuses, getSingleCampus, deleteSingleCampus } from "./campuses";
+import { getAllCampuses, getSingleCampus, deleteSingleCampus, addSingleCampus } from "./campuses";
 
 export const createContext = ({
     req,
@@ -22,4 +22,5 @@ export const appRouter = t.router({
     getCampuses: getAllCampuses(),
     getCampus: getSingleCampus(),
     deleteCampus: deleteSingleCampus(),
+    addCampus: addSingleCampus(),
 })
