@@ -23,6 +23,9 @@ function AllCampuses() {
 
   function deleteCampus(campus: CampusFromDB) {
     mutation.mutate({ id: campus.id })
+    if (data?.campuses) {
+      data.campuses = data.campuses.filter((current) => current.id !== campus.id)
+    }
   }
 
 
