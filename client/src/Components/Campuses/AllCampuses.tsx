@@ -9,19 +9,17 @@ import { useMutation } from '@tanstack/react-query';
 
 
 function AllCampuses() {
-  const { context, setContext, campuses } = useContext(Context);
-  const { data, isError } = trpc.getCampuses.useQuery();
+  const { data, isError, isLoading } = trpc.getCampuses.useQuery();
   const mutation = trpc.deleteCampus.useMutation();
 
-  useEffect(() => {
-    setContext({ ...context, campuses: data?.campuses })
-  }, [data])
 
   function deleteCampus(id: number | undefined) {
     if (id) {
       mutation.mutate({ id: id }, {
-        onSuccess: (data: deletedCampus) => {
-          setContext({ ...context, campuses: campuses.filter((current) => current.id !== data.id) })
+        onSuccess: () => {
+          if (data?.campuses) {
+            data.campuses = data.campuses.filter((current) => current.id !== id)
+          }
         },
         onError: () => alert("There was a problem deleting this campus.")
       })
@@ -30,13 +28,15 @@ function AllCampuses() {
 
 
 
+  if (isError) return <div>There was an error retrieving all campuses.</div>
+  if (isLoading) return <div>Loading...</div>
   return (
     <div id="campuses">
       <div>
         <NewCampus />
         <UpdateCampus />
       </div>
-      {campuses?.map((campus) => {
+      {data?.campuses?.map((campus) => {
         return (
           <div key={campus.id}>
             <img
