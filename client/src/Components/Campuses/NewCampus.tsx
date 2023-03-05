@@ -5,7 +5,6 @@ import { trpc } from '../../utils/trpc';
 
 function NewCampus({ refetch }: any) {
   const [newCampus, setNewCampus] = useState<Campus>(initialCampusState);
-
   const mutation = trpc.addCampus.useMutation();
 
 
