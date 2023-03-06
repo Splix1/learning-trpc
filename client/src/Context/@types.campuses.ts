@@ -1,19 +1,26 @@
 export interface Campus {
-  id?: number;
-  createdAt?: string;
-  updatedAt?: string;
+  id: number;
+  createdAt: string;
+  updatedAt: string;
   name: string;
   imageUrl: string;
   address: string;
   description: string;
 }
 
-export const initialCampusState: Campus = {
+export interface initialCampusInterface {
+  name: string;
+  imageUrl: string;
+  address: string;
+  description: string;
+};
+
+export const initialCampusState: initialCampusInterface = {
   name: '',
   imageUrl: '',
   address: '',
-  description: '',
-};
+  description: ''
+}
 
 export type CampusFromDB = {
   id: number;

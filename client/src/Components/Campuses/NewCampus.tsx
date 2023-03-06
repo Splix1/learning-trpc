@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Campus, initialCampusState } from '../../Context/@types.campuses';
+import { Campus, initialCampusState, initialCampusInterface } from '../../Context/@types.campuses';
 import { trpc } from '../../utils/trpc';
 
 
 function NewCampus() {
   const utils = trpc.useContext();
-  const [newCampus, setNewCampus] = useState<Campus>(initialCampusState);
+  const [newCampus, setNewCampus] = useState<initialCampusInterface>(initialCampusState);
   const mutation = trpc.addCampus.useMutation({
     onSuccess() {
       utils.getCampuses.invalidate();
