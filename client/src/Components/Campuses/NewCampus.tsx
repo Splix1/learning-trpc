@@ -3,22 +3,22 @@ import { Campus, initialCampusState } from '../../Context/@types.campuses';
 import { trpc } from '../../utils/trpc';
 
 
-function NewCampus({ refetch }: any) {
+function NewCampus() {
+  const utils = trpc.useContext();
   const [newCampus, setNewCampus] = useState<Campus>(initialCampusState);
-  const mutation = trpc.addCampus.useMutation();
+  const mutation = trpc.addCampus.useMutation({
+    onSuccess() {
+      utils.getCampuses.invalidate();
+    },
+    onError() {
+      alert("Failed to create campus. Please fill out all fields correctly.")
+    }
+  });
 
 
   function createCampus(evt: React.FormEvent) {
     evt.preventDefault();
-    mutation.mutate(newCampus, {
-      onSuccess: () => {
-        refetch();
-      },
-      onError: () => {
-        alert("Failed to create campus. Please fill out all fields correctly.")
-      }
-    })
-
+    mutation.mutate(newCampus)
   }
 
   return (

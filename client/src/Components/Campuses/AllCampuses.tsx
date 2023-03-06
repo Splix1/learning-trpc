@@ -6,16 +6,21 @@ import { trpc } from '../../utils/trpc';
 
 
 function AllCampuses() {
-  const { data, isError, isLoading, refetch } = trpc.getCampuses.useQuery();
-  const mutation = trpc.deleteCampus.useMutation();
+  const utils = trpc.useContext();
+  const { data, isError, isLoading } = trpc.getCampuses.useQuery();
+  const mutation = trpc.deleteCampus.useMutation({
+    onSuccess() {
+      utils.getCampuses.invalidate();
+    },
+    onError() {
+      alert("There was a problem deleting this campus.")
+    }
+  })
 
 
   function deleteCampus(id: number | undefined) {
     if (id) {
-      mutation.mutate({ id: id }, {
-        onSuccess: () => refetch(),
-        onError: () => alert("There was a problem deleting this campus.")
-      })
+      mutation.mutate({ id: id })
     }
   }
 
@@ -27,7 +32,7 @@ function AllCampuses() {
   return (
     <div id="campuses">
       <div>
-        <NewCampus refetch={refetch} />
+        <NewCampus />
         <UpdateCampus />
       </div>
       {data?.campuses?.map((campus) => {
