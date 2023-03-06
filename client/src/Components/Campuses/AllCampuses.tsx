@@ -23,21 +23,21 @@ function AllCampuses() {
   if (isLoading) return <div>Loading...</div>
   return (
     <div className='campus-container'>
-      <div>
-        {/* <NewCampus />
+
+      {/* <NewCampus />
         <UpdateCampus /> */}
-      </div>
+
       {data?.campuses?.map((campus) => {
         return (
           <div key={campus.id} className="campus-card">
             <img
               className="campus-image"
               src={campus.imageUrl}
-              alt="Image of Campus"
+              alt={campus.name}
             />
-            <div className='campus-name'>{campus.name}</div>
-            <div className='campus-address'>{campus.address}</div>
-            <div className='campus-description'>{campus.description}</div>
+            <h2 className='campus-name'>{campus.name}</h2>
+            <p className='campus-address'>{campus.address}</p>
+            <p className='campus-description'>{campus.description}</p>
             <button className='delete-button' onClick={() => deleteCampus({ id: campus.id })}>Delete</button>
           </div>
         );
