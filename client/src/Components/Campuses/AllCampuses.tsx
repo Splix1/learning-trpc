@@ -3,6 +3,7 @@ import NewCampus from './NewCampus';
 import './Campuses.css';
 import UpdateCampus from './UpdateCampus';
 import { trpc } from '../../utils/trpc';
+import { Link } from 'react-router-dom';
 
 
 function AllCampuses() {
@@ -17,7 +18,6 @@ function AllCampuses() {
     },
   })
 
-  console.log(data)
 
   if (isError) return <div>There was an error retrieving all campuses.</div>
   if (isLoading) return <div>Loading...</div>
@@ -29,7 +29,7 @@ function AllCampuses() {
 
       {data?.campuses?.map((campus) => {
         return (
-          <div key={campus.id} className="campus-card">
+          <Link to={`/campuses/${campus.id}`} key={campus.id} className="campus-card">
             <img
               className="campus-image"
               src={campus.imageUrl}
@@ -39,7 +39,7 @@ function AllCampuses() {
             <p className='campus-address'>{campus.address}</p>
             <p className='campus-description'>{campus.description}</p>
             <button className='delete-button' onClick={() => deleteCampus({ id: campus.id })}>Delete</button>
-          </div>
+          </Link>
         );
       })}
     </div>
