@@ -1,6 +1,6 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { Student } from './@types.students';
-import { Campus } from './@types.campuses';
+import { Campus, initialCampusInterface } from './@types.campuses';
 import type { PropsWithChildren } from 'react';
 
 
@@ -34,26 +34,28 @@ const ContextProvider = ({ children }: PropsWithChildren) => {
     });
   };
 
-  const addCampus = (campus: Campus) => {
-    const { name, imageUrl, address, description } = campus;
-    const newCampus: Campus = {
-      name,
-      imageUrl,
-      address,
-      description,
-    };
-    setContext({
-      students: [...context.students],
-      campuses: [...context.campuses, newCampus],
-    });
-  };
+  // const addCampus = (campus: Campus) => {
+  //   const { name, imageUrl, address, description } = campus;
+  //   const newCampus: Campus = {
+  //     id,
+  //     createdAt,
+  //     updatedAt,
+  //     name,
+  //     imageUrl,
+  //     address,
+  //     description,
+  //   };
+  //   setContext({
+  //     students: [...context.students],
+  //     campuses: [...context.campuses, newCampus],
+  //   });
+  // };
 
   const value = {
     students: context.students,
     campuses: context.campuses,
     context,
     addStudent,
-    addCampus,
     setContext,
   };
 

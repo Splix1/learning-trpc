@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Campus, initialCampusState } from '../../Context/@types.campuses';
+import { initialCampusInterface, initialCampusState } from '../../Context/@types.campuses';
 import { Context } from '../../Context/ContextProvider';
 import '../../App.css';
 
 export default function UpdateCampus() {
   const [campusToUpdate, setCampusToUpdate] = useState<number | null>(null);
   const [updatedCampus, setUpdatedCampus] =
-    useState<Campus>(initialCampusState);
+    useState<initialCampusInterface>(initialCampusState);
   const { campuses, context, setContext } = useContext(Context);
 
   useEffect(() => {
@@ -18,22 +18,22 @@ export default function UpdateCampus() {
     }
   }, [campusToUpdate]);
 
-  function updateCampus(evt: React.FormEvent<HTMLFormElement>) {
-    evt.preventDefault();
-    const updateCampusRoute = `/api/campuses/${updatedCampus.id}`;
-    import('axios')
-      .then((axios) => axios.default.put(updateCampusRoute, updatedCampus))
-      .then((response) =>
-        setContext({
-          ...context,
-          campuses: campuses.map((currentCampus) =>
-            currentCampus.id === response?.data?.id
-              ? response.data
-              : currentCampus
-          ),
-        })
-      );
-  }
+  // function updateCampus(evt: React.FormEvent<HTMLFormElement>) {
+  //   evt.preventDefault();
+  //   const updateCampusRoute = `/api/campuses/${updatedCampus.id}`;
+  //   import('axios')
+  //     .then((axios) => axios.default.put(updateCampusRoute, updatedCampus))
+  //     .then((response) =>
+  //       setContext({
+  //         ...context,
+  //         campuses: campuses.map((currentCampus) =>
+  //           currentCampus.id === response?.data?.id
+  //             ? response.data
+  //             : currentCampus
+  //         ),
+  //       })
+  //     );
+  // }
 
   return (
     <div id="update-campus">
@@ -50,7 +50,7 @@ export default function UpdateCampus() {
       </div>
       {campusToUpdate ? (
         <div id="add-campus-form">
-          <form onSubmit={updateCampus}>
+          <form /*onSubmit={updateCampus}*/>
             <div>
               <div>Name</div>
               <input
