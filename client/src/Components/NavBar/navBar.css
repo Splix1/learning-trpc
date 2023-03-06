@@ -1,7 +1,44 @@
-#navbar {
+/* #navbar {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   background-color: gray;
   height: 50px;
+} */
+
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+}
+
+.navbar-brand {
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.navbar-menu {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-link {
+  text-decoration: none;
+  color: #fff;
+  margin-right: 20px;
+  font-size: 18px;
+  text-transform: uppercase;
+  padding: 10px;
+  transition: all 0.3s ease;
+}
+
+.navbar-link:hover {
+  background-color: #fff;
+  color: #333;
+  border-radius: 5px;
 }

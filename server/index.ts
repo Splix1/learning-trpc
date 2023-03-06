@@ -1,4 +1,4 @@
-// @filename: server.ts
+// @filename: index.ts
 import { initTRPC, inferAsyncReturnType } from '@trpc/server';
 import { z } from 'zod';
 import * as trpcExpress from '@trpc/server/adapters/express';

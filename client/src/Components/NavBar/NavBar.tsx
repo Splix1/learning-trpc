@@ -4,16 +4,17 @@ import './navBar.css';
 
 const NavBar = () => {
   return (
-    <div id="navbar">
-      <div>
-        <Link to="/">Home</Link>
-      </div>
+    <div className="navbar">
+      <div className='navbar-menu'>
 
-      <div>
-        <Link to="/students">Students</Link>
-      </div>
-      <div>
-        <Link to="/campuses">Campuses</Link>
+        <Link className='navbar-link' to="/">Home</Link>
+
+
+
+        <Link className='navbar-link' to="/students">Students</Link>
+
+        <Link className='navbar-link' to="/campuses">Campuses</Link>
+
       </div>
     </div>
   );

@@ -1,9 +1,8 @@
 import React from 'react';
 import NewCampus from './NewCampus';
-import '../../App.css';
+import './Campuses.css';
 import UpdateCampus from './UpdateCampus';
 import { trpc } from '../../utils/trpc';
-import { Campus } from '../../Context/@types.campuses';
 
 
 function AllCampuses() {
@@ -18,28 +17,28 @@ function AllCampuses() {
     },
   })
 
-
+  console.log(data)
 
   if (isError) return <div>There was an error retrieving all campuses.</div>
   if (isLoading) return <div>Loading...</div>
   return (
-    <div id="campuses">
+    <div className='campus-container'>
       <div>
-        <NewCampus />
-        <UpdateCampus />
+        {/* <NewCampus />
+        <UpdateCampus /> */}
       </div>
       {data?.campuses?.map((campus) => {
         return (
-          <div key={campus.id}>
+          <div key={campus.id} className="campus-card">
             <img
-              className="campus-img"
+              className="campus-image"
               src={campus.imageUrl}
               alt="Image of Campus"
             />
-            <div>{campus.name}</div>
-            <div>{campus.address}</div>
-            <div>{campus.description}</div>
-            <button onClick={() => deleteCampus({ id: campus.id })}>Delete</button>
+            <div className='campus-name'>{campus.name}</div>
+            <div className='campus-address'>{campus.address}</div>
+            <div className='campus-description'>{campus.description}</div>
+            <button className='delete-button' onClick={() => deleteCampus({ id: campus.id })}>Delete</button>
           </div>
         );
       })}
