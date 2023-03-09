@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 function AllCampuses() {
   const utils = trpc.useContext();
-  const { data, isError, isLoading } = trpc.getCampuses.useQuery();
+  const { data: campuses, isError, isLoading } = trpc.getCampuses.useQuery();
   const { mutate: deleteCampus } = trpc.deleteCampus.useMutation({
     onSuccess() {
       utils.getCampuses.invalidate();
@@ -19,27 +19,28 @@ function AllCampuses() {
   })
 
 
+
   if (isError) return <div>There was an error retrieving all campuses.</div>
   if (isLoading) return <div>Loading...</div>
   return (
     <div className='campus-container'>
-
-      {/* <NewCampus />
-        <UpdateCampus /> */}
-
-      {data?.campuses?.map((campus) => {
+      <NewCampus />
+      <UpdateCampus />
+      {campuses.map((campus) => {
         return (
-          <Link to={`/campuses/${campus.id}`} key={campus.id} className="campus-card">
-            <img
-              className="campus-image"
-              src={campus.imageUrl}
-              alt={campus.name}
-            />
+          <div className="campus-card" key={campus.id}>
+            <Link to={`/campuses/${campus.id}`} key={campus.id}>
+              <img
+                className="campus-image"
+                src={campus.imageUrl}
+                alt={campus.name}
+              />
+            </Link>
             <h2 className='campus-name'>{campus.name}</h2>
             <p className='campus-address'>{campus.address}</p>
             <p className='campus-description'>{campus.description}</p>
             <button className='delete-button' onClick={() => deleteCampus({ id: campus.id })}>Delete</button>
-          </Link>
+          </div>
         );
       })}
     </div>

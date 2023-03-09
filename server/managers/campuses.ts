@@ -8,9 +8,7 @@ export const getAllCampuses = () =>
     procBuilder.query(async () => {
         const campuses = await prisma.campus.findMany();
 
-        return {
-            campuses: campuses,
-        }
+        return campuses;
     });
 
 export const getSingleCampus = () => procBuilder.input(z.object({ id: z.string().min(1) })).query(async (req) => {
